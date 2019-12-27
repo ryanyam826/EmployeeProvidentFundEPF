@@ -13,15 +13,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         txtDOB.setOnClickListener() {
-            val c: Calendar = Calendar.getInstance()
-            val currentDay = c.get(Calendar.DAY_OF_MONTH)
-            val currentMonth = c.get(Calendar.MONTH)
-            val currentYear = c.get(Calendar.YEAR)
+            val c: Calendar = Calendar.getInstance();
+            val currentDay = c.get(Calendar.DAY_OF_MONTH);
+            val currentMonth = c.get(Calendar.MONTH);
+            val currentYear = c.get(Calendar.YEAR);
+
 
             val dpd = DatePickerDialog(this,
                 DatePickerDialog.OnDateSetListener { view, year, month, day ->
                     txtDOB.setText(day.toString() + "/" + (month + 1).toString() + "/" + year.toString())
-                    val age = (currentYear - year)
+
+                    val age:Int = (currentYear - year)
                     txtAge.text = age.toString()
                     txtMinBS.text = "RM " + getMinBasicsaving(age).toString()
                     txtAllowInv.text = "RM " + (txtMinBS.text.toString().toDouble() * 0.3).toString()

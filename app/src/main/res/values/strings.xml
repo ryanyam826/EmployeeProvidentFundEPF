@@ -4,5 +4,5 @@
     <string name="age">Age : </string>
     <string name="min_basic_saving">min. Basic Saving : </string>
     <string name="allowable_investment">Allowable Investment : </string>
-
+    <string name="click">Click</string>
 </resources>
