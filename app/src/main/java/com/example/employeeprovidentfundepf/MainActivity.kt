@@ -1,6 +1,7 @@
 package com.example.employeeprovidentfundepf
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,46 +13,50 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        txtDOB.setOnClickListener() {
-            val c: Calendar = Calendar.getInstance();
-            val currentDay = c.get(Calendar.DAY_OF_MONTH);
-            val currentMonth = c.get(Calendar.MONTH);
-            val currentYear = c.get(Calendar.YEAR);
+        var dobYear: Int = 0
 
+        txtDOB.setOnClickListener {
+            val c: Calendar = Calendar.getInstance()
+            val currentDay = c.get(Calendar.DAY_OF_MONTH)
+            val currentMonth = c.get(Calendar.MONTH)
+            val currentYear = c.get(Calendar.YEAR)
 
             val dpd = DatePickerDialog(this,
-                DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                DatePickerDialog.OnDateSetListener {
+                        view, year, month, day ->
                     txtDOB.setText(day.toString() + "/" + (month + 1).toString() + "/" + year.toString())
-
-                    val age:Int = (currentYear - year)
-                    txtAge.text = age.toString()
-                    txtMinBS.text = "RM " + getMinBasicsaving(age).toString()
-                    txtAllowInv.text = "RM " + (txtMinBS.text.toString().toDouble() * 0.3).toString()
-                },currentYear,currentMonth,currentDay)
+                    dobYear = year
+                    display(currentYear, dobYear)
+                    txtDOB.setTextColor(Color.BLACK)
+                }, currentYear, currentMonth, currentDay)
 
             dpd.show()
         }
 
+
     }
 
-     private fun getMinBasicsaving(age:Int):Double{
-        if(age > 15 && age < 21){
-           return 5000.00
-        }else if(age > 20 && age < 26){
-            return 14000.00
-        }else if(age > 25 && age < 31){
-            return 29000.00
-        }else if(age > 30 && age < 36){
-            return 50000.00
-        }else if(age > 35 && age < 41){
-            return 78000.00
-        }else if(age > 40 && age < 46){
-            return 116000.00
-        }else if(age > 45 && age < 51){
-            return 165000.00
-        }else if(age > 50 && age < 56){
-            return 228000.00
+    private fun display(cYear: Int, year: Int) {
+        var age: Int = cYear - year
+        var basicSaving: Int = 0
+        var allowableInvestment: Double
+
+        when (age) {
+            16, 17, 18, 19, 20 -> basicSaving = 5000
+            21, 22, 23, 24, 25 -> basicSaving = 14000
+            26, 27, 28, 29, 30 -> basicSaving = 29000
+            31, 32, 33, 34, 35 -> basicSaving = 50000
+            36, 37, 38, 39, 40 -> basicSaving = 78000
+            41, 42, 43, 44, 45 -> basicSaving = 116000
+            46, 47, 48, 49, 50 -> basicSaving = 165000
+            51, 52, 53, 54, 55 -> basicSaving = 228000
+            else -> 0
         }
-        return 0.00;
+
+        allowableInvestment = basicSaving * 0.3
+
+        txtAge.setText(age.toString())
+        txtMinBS.setText(basicSaving.toString())
+        txtAllowInv.setText(allowableInvestment.toInt().toString())
     }
 }
